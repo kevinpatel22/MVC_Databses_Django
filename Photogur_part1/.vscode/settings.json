@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "/Users/kevin/.pyenv/versions/photogur/bin/python",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
+}

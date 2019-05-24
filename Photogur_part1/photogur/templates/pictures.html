@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Photogur</title>
+</head>
+<body>
+    <ul>
+    {% for pic in db_pictures %}
+        <li> 
+        <img src="{{ pic.url }}">
+        <h3>Title: {{ pic.title }} </h3>
+        <h3>By: {{ pic.artist }} </h3>
+        <p>Comments: {{ pic.comments.count }} </p>
+        </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
