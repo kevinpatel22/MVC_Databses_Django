@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ picture }}</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
     <main>
-        <h1>{{picture.title}}</h1>
-        <h2>By {{picture.artist}}</h2>
+        <h2>{{picture.title}}</h2>
+        <h3>By {{picture.artist}}</h3>
         <img src="{{picture.url}}" alt="{{picture.title}}" />
-    </main>
-    <footer>
         <ul>
             {% for comment in picture.comments.all %}
                 <li>
@@ -20,6 +11,5 @@
                 </li>
             {% endfor %}
         </ul>
-    </footer>
-</body>
-</html>
+    </main>
+{% endblock %}
