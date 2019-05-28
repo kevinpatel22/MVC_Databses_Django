@@ -1,16 +1,16 @@
 
 {% extends 'base.html' %}
 {% block content %}
-    <ul>
-    {% for pic in db_pictures %}
-        <a href="{% url 'picture_details' id=pic.pk %}">
-            <li> 
-            <img src="{{ pic.url }}">
-            <h3>Title: {{ pic.title }} </h3>
-            <h3>By: {{ pic.artist }} </h3>
-            <p>Comments: {{ pic.comments.count }} </p>
-            </li>
-        </a>
-    {% endfor %}
-    </ul>
+    <main>
+        <ul class="all_photos">
+        {% for pic in db_pictures %}
+            <a href="{% url 'picture_details' id=pic.pk %}">
+                <li> 
+                <img src="{{ pic.url }}">
+                <p>{{ pic.title }} by {{ pic.artist }} </p>
+                </li>
+            </a>
+        {% endfor %}
+        </ul>
+    </main>
 {% endblock %}
