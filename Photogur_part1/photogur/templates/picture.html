@@ -1,9 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-    <main>
-        <h2>{{picture.title}}</h2>
-        <h3>By {{picture.artist}}</h3>
+{% load staticfiles %}
+<link rel="stylesheet", href="{% static 'css/picture.css' %}">
+    <main class="indiv-pic">
+        <h3>{{picture.title}}</h3>
+        <h4>By {{picture.artist}}</h4>
         <img src="{{picture.url}}" alt="{{picture.title}}" />
+        
+        
+        <form action="{% url 'create_comment' %}" method="post">
+            {% csrf_token %}
+            <div class ="comment">
+                <input type="hidden" name="picture" value="{{ picture.pk }}">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" placeholder="e.g. John Smith" class="comment_box">
+                <label for="message">Comment</label>
+                <textarea name="message" id="message" cols="20" rows="5" placeholder="Write a comment...." class="comment_box"></textarea>
+                <button type="submit">Post</button> 
+            </div>               
+        </form>
+
+        <h4>Comment</h4>
         <ul>
             {% for comment in picture.comments.all %}
                 <li>
@@ -11,5 +28,6 @@
                 </li>
             {% endfor %}
         </ul>
+        <a class="back" href="{% url 'pictures_page' %}">Return to Gallery</a>
     </main>
 {% endblock %}

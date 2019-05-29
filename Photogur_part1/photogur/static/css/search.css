@@ -1,0 +1,67 @@
+.heading {
+    color: grey;
+}
+
+.search-page {
+    color: grey;
+    font-size: 0.9em;
+}
+
+.search-page span {
+    border-bottom: 3px grey solid;
+}
+
+.search-section {
+    border-top: 1px solid lightgray;
+    padding: 20px 0;
+    margin: 10px 0;
+}
+
+.search-text{
+    color: grey;
+}
+
+.search {
+    margin-left: 20px;
+}
+
+.search-page img {
+    width: 30%;  
+}
+
+.search-page ul {
+    border-bottom: 1px solid lightgray;
+}
+
+footer {
+    margin-top: 100px;
+}
+
+
+@media screen and (min-width: 800px) {
+    .pic-description {
+        display: block;
+        margin-top: 3px;
+        margin-bottom: 9px;
+    }
+
+    .heading {
+        margin: 20px 0;
+        border-top: 2px solid lightgray;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .pic-description {
+        display: inline-block;
+        margin-bottom: 9px;
+    }
+    
+    .heading {
+        margin-bottom: 20px;
+        border: 0;
+    }
+}    
+
+
+
