@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load staticfiles %}
+<link rel="stylesheet", href="{% static 'css/search.css' %}">
+    <main class="search-page">
+        <h2 class="search-section">Search results:
+            <span>{{ pictures.count }}</span>
+        </h2>
+        
+        {% for picture in pictures %}
+            <ul>
+            <a href="{% url 'picture_details' id=picture.pk %}">
+            <img src="{{picture.url}}" alt="{{picture.title}}" />
+            </a>
+            <p class="pic-description">{{picture.title}} by {{picture.artist}}</p>
+            </ul>
+        {% endfor %}
+    </main>
+{% endblock %}

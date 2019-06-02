@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <main>
+        <ul class="all_photos">
+        {% for pic in db_pictures %}
+            <a href="{% url 'picture_details' id=pic.pk %}">
+                <li> 
+                <img src="{{ pic.url }}">
+                <p>{{ pic.title }} by {{ pic.artist }} </p>
+                </li>
+            </a>
+        {% endfor %}
+        </ul>
+    </main>
+{% endblock %}
