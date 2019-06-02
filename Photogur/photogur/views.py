@@ -1,10 +1,11 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 from photogur.models import Picture, Comment
-from photogur.forms import LoginForm
+from photogur.forms import LoginForm, PictureForm
 
 def pictures_page(request):
     pic_links = Picture.objects.all()
@@ -55,3 +56,35 @@ def login_view(request):
     context = {'form': form}
     http_response = render(request, 'login.html', context)
     return HttpResponse(http_response)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/login')
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return HttpResponseRedirect('/pictures')
+    else:
+        form = UserCreationForm()
+    html_response = render(request, 'signup.html', {'form': form})
+    return HttpResponse(html_response)
+
+def add_picture(request):
+    if request.method == 'POST':
+        form = PictureForm(request.POST)
+        if form.is_valid():
+            add_pic = form.save(commit=False)
+            add_pic.user = request.user
+            form.save()
+            return redirect('picture_details', id=add_pic.id)
+    else:
+        form = PictureForm()
+    html_response = render(request, 'new_pic.html', {'form': form})
+    return HttpResponse(html_response)
