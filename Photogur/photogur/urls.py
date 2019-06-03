@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from photogur.views import (pictures_page, picture_show, root, picture_search, create_comment, login_view, logout_view, signup, add_picture)
+from photogur.views import (pictures_page, picture_show, root, picture_search, create_comment, login_view, logout_view, signup, add_picture, edit_picture)
 
 urlpatterns = [
     path('', root),
@@ -28,4 +28,5 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('signup/', signup, name='signup'),
     path('picture/new', add_picture, name='new_picture'),
+    path('picture/edit/<int:id>', edit_picture, name='edit_picture')
 ]

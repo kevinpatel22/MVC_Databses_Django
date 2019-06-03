@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 from photogur.models import Picture, Comment
@@ -40,6 +41,8 @@ def create_comment(request):
     return redirect("picture_details", id=user_select_picture)
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/pictures')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -62,6 +65,8 @@ def logout_view(request):
     return HttpResponseRedirect('/login')
 
 def signup(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/pictures')
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -76,6 +81,8 @@ def signup(request):
     html_response = render(request, 'signup.html', {'form': form})
     return HttpResponse(html_response)
 
+
+@login_required
 def add_picture(request):
     if request.method == 'POST':
         form = PictureForm(request.POST)
@@ -87,4 +94,20 @@ def add_picture(request):
     else:
         form = PictureForm()
     html_response = render(request, 'new_pic.html', {'form': form})
+    return HttpResponse(html_response)
+
+
+@login_required
+def edit_picture(request, id):
+    picture = get_object_or_404(Picture, pk=id, user=request.user.pk)
+    if request.method == 'POST':
+        form = PictureForm(request.POST, instance=picture)
+        if form.is_valid():
+            form.save()
+            return redirect('picture_details', id=picture.id)
+    else:
+        form = PictureForm(instance=picture)
+
+    html_response = render(request, 'edit_pic.html', {
+                           'form': form, 'picture': picture})
     return HttpResponse(html_response)
